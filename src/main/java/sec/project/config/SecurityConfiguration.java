@@ -1,4 +1,4 @@
-    package sec.project.config;
+package sec.project.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -20,9 +22,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // no real security at the moment
         http.authorizeRequests()
+                .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll();
+        
+        http.formLogin()
+                .permitAll();
+        
+        http.logout()
+                .logoutSuccessUrl("/logout_success")
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID");
     }
 
     @Autowired

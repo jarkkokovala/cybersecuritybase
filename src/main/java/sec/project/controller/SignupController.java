@@ -37,11 +37,22 @@ public class SignupController {
         return "signups";
     }
     
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String list(Authentication authentication, Model model) {
+        model.addAttribute("signups", signupRepository.findAll());
+        return "admin";
+    }
+    
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String loadForm() {
         return "form";
     }
 
+    @RequestMapping(value = "/logout_success", method = RequestMethod.GET)
+    public String logoutSuccess() {
+        return "logout_success";
+    }
+    
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String submitForm(@RequestParam String name, @RequestParam String address) {
         signupRepository.save(new Signup(name, address));
