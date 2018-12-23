@@ -21,6 +21,7 @@
                 <tr th:each="signup : ${signups}">
                     <td th:text="${signup.name}">Name</td>
                     <td th:text="${signup.address}">Address</td>
+                    <td><a th:href="@{/signups/{id}(id=${signup.id})}">view</a></td>
                 </tr>
             </tbody>
         </table>

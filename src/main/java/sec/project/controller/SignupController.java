@@ -36,7 +36,19 @@ public class SignupController {
         model.addAttribute("signups", signupRepository.findAll());
         return "signups";
     }
+
+    @RequestMapping(value = "/signups/{id}", method = RequestMethod.GET)
+    public String viewSignup(@PathVariable Long id, Model model) {
+        model.addAttribute("signup", signupRepository.findOne(id));
+        return "view";
+    }    
     
+    @RequestMapping(value = "/signups/{id}", method = RequestMethod.DELETE)
+    public String remove(@PathVariable Long id) {
+        signupRepository.delete(id);
+        return "redirect:/admin";
+    }
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String list(Authentication authentication, Model model) {
         model.addAttribute("signups", signupRepository.findAll());
