@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>List of signups</title>
+    </head>
+    <body>
+
+        <h2>List of people who have signed up</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${signups.empty}">
+                    <td colspan="4">No one has signed up</td>
+                </tr>
+                <tr th:each="signup : ${signups}">
+                    <td th:text="${signup.name}">Name</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>
