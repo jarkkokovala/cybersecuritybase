@@ -12,7 +12,8 @@ public class Account extends AbstractPersistable<Long> {
     @Column(unique = true)
     private String username;
     private String password;
-
+    private String role;
+    
     public String getUsername() {
         return username;
     }
@@ -29,4 +30,15 @@ public class Account extends AbstractPersistable<Long> {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    public String toString() {
+        return username + ":" + password + ":" + role;
+    }
 }

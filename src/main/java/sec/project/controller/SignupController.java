@@ -1,5 +1,9 @@
 package sec.project.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,14 +48,21 @@ public class SignupController {
     }    
     
     @RequestMapping(value = "/signups/{id}", method = RequestMethod.DELETE)
-    public String remove(@PathVariable Long id) {
-        signupRepository.delete(id);
+    public String remove(@CookieValue("account") String account, @PathVariable Long id) {
+        String[] user = account.split(":");
+        
+        if(user[2].equals("admin"))
+            signupRepository.delete(id);
+        
         return "redirect:/admin";
     }
-
+    
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String list(Authentication authentication, Model model) {
+    public String list(HttpServletResponse response, Authentication authentication, Model model) {
+        Account account = accountRepository.findByUsername(authentication.getName());
         model.addAttribute("signups", signupRepository.findAll());
+        model.addAttribute("account", account);
+        response.addCookie(new Cookie("account", account.toString()));
         return "admin";
     }
     

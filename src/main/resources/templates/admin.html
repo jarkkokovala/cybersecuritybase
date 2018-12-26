@@ -27,7 +27,7 @@
         </table>
 
         <form name="logoutForm" th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign out admin"/>
+            <input type="submit" th:value="'Sign out ' + ${account.username}" value="Sign out"/>
         </form>
     </body>
 </html>

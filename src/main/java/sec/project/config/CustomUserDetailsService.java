@@ -25,9 +25,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     public void init() {
         Account account = new Account();
         account.setUsername("admin");
-        account.setPassword(passwordEncoder.encode("bob"));
+        account.setPassword(passwordEncoder.encode("alice"));
+        account.setRole("admin");
         accountRepository.save(account);
-        
+
+        Account account2 = new Account();
+        account2.setUsername("operator");
+        account2.setPassword(passwordEncoder.encode("bob"));
+        account2.setRole("operator");
+        accountRepository.save(account2); 
     }
 
     @Override
